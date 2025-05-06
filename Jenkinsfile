@@ -13,10 +13,11 @@ pipeline {
         }
 
         stage('Build') {
-            steps {
-                bat 'npm run build'
-            }
-        }
+    steps {
+        bat 'set "CI=" && npm run build'
+    		}
+	}
+
 
         stage('Test') {
             steps {
