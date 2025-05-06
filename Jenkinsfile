@@ -1,18 +1,14 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs "NodeJS_18"
-    }
-
     stages {
         stage('Clone') {
             steps {
-                git url: 'https://github.com/Kola1827/Portfolio.git'
+                checkout scm
             }
         }
 
-        stage('Install') {
+        stage('Install Dependencies') {
             steps {
                 sh 'npm install'
             }
@@ -24,11 +20,10 @@ pipeline {
             }
         }
 
-        stage('Archive') {
+        stage('Test') {
             steps {
-                archiveArtifacts artifacts: 'build/**', fingerprint: true
+                sh 'npm test -- --watchAll=false'
             }
         }
     }
 }
-
