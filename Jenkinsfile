@@ -1,28 +1,26 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Clone') {
-            steps {
-                checkout scm
-            }
-        }
+    tools {
+        nodejs 'nodejs_18_20_8' // Match the name you gave in Global Tool Config
+    }
 
-        stage('Install Dependencies') {
+    stages {
+        stage('Install') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'npm run build'
+                bat 'npm run build'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'npm test -- --watchAll=false'
+                bat 'npm test -- --watchAll=false'
             }
         }
     }
